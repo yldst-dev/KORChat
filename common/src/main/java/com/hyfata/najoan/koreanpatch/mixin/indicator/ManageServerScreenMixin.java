@@ -1,0 +1,63 @@
+package com.hyfata.najoan.koreanpatch.mixin.indicator;
+
+import com.hyfata.najoan.koreanpatch.indicator.AnimationHandler;
+import com.hyfata.najoan.koreanpatch.indicator.IndicatorHandler;
+import com.hyfata.najoan.koreanpatch.util.minecraft.EditBoxUtil;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.screens.ManageServerScreen;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(value = {ManageServerScreen.class})
+public class ManageServerScreenMixin extends Screen {
+    protected ManageServerScreenMixin(Component title) {
+        super(title);
+    }
+
+    @Shadow
+    private EditBox ipEdit;
+
+    @Shadow
+    private EditBox nameEdit;
+
+    @Shadow
+    @Final
+    private static Component NAME_LABEL;
+
+    @Shadow
+    @Final
+    private static Component IP_LABEL;
+
+    @Unique
+    private final AnimationHandler koreanPatch$animationHandler = new AnimationHandler();
+
+    @Inject(at = {@At(value = "TAIL")}, method = {"render"})
+    private void addCustomLabel(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
+        float x;
+        float y;
+        int textX = this.width / 2 - 100 + 1;
+
+        if (nameEdit.isFocused()) {
+            x = EditBoxUtil.getCursorXWithText(nameEdit, NAME_LABEL, textX);
+            y = EditBoxUtil.calculateIndicatorY(nameEdit);
+        } else if (ipEdit.isFocused()) {
+            x = EditBoxUtil.getCursorXWithText(ipEdit, IP_LABEL, textX);
+            y = EditBoxUtil.calculateIndicatorY(ipEdit);
+        } else {
+            return;
+        }
+
+        koreanPatch$animationHandler.init(x - 4, 0);
+        koreanPatch$animationHandler.calculateAnimation(x, 0);
+
+        IndicatorHandler.showIndicator(guiGraphics, koreanPatch$animationHandler.getResultX() + 4, y);
+    }
+}

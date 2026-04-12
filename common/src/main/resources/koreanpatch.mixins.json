@@ -1,0 +1,28 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.hyfata.najoan.koreanpatch.mixin",
+  "refmap": "${mod_id}.refmap.json",
+  "compatibilityLevel": "JAVA_18",
+  "mixins": [],
+  "client": [
+    "EditBoxMixin",
+    "KeyboardHandlerMixin",
+    "MultilineEditBoxMixin",
+    "SignEditIndicatorMixin",
+    "ScreenIndicatorMixin",
+    "TextFieldHelperMixin",
+    "accessor.CommandSuggestionsAccessor",
+    "accessor.CreateWorldScreenGameTabAccessor",
+    "accessor.CreativeModeInventoryScreenInvoker",
+    "accessor.EditBoxAccessor",
+    "accessor.MultilineEditBoxAccessor",
+    "accessor.MultilineTextFieldAccessor",
+    "accessor.TabNavigationBarAccessor",
+    "accessor.TextFieldHelperAccessor"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

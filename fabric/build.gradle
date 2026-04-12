@@ -1,0 +1,72 @@
+plugins {
+    id 'multiloader-loader'
+    id 'net.fabricmc.fabric-loom'
+}
+
+repositories {
+    maven {
+        name = "Terraformers"
+        url = "https://maven.terraformersmc.com/"
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+
+    implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    include "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    compileOnly "dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric"
+
+    compileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+    compileOnly "maven.modrinth:command-block-ide:${project.command_block_ide_version}"
+    compileOnly "maven.modrinth:bettercommandblockui:${project.better_command_block_ui_version}"
+    compileOnly "maven.modrinth:easy-anvils:${project.easy_anvils_version_fabric}"
+    compileOnly "maven.modrinth:axiom:${project.axiom_version}"
+    compileOnly "maven.modrinth:xaeros-minimap:${project.xaeros_minimap_fabric}"
+    compileOnly "maven.modrinth:xaeros-world-map:${project.xaeros_world_map_fabric}"
+    compileOnly "maven.modrinth:rei:${project.rei_fabric}"
+}
+
+loom {
+    def aw = project(':common').file("src/main/resources/${mod_id}.accesswidener")
+    if (aw.exists()) {
+        accessWidenerPath.set(aw)
+    }
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
+    runs {
+        client {
+            client()
+            setConfigName('Fabric Client')
+            ideConfigGenerated(true)
+            runDir('runs/client')
+        }
+        server {
+            server()
+            setConfigName('Fabric Server')
+            ideConfigGenerated(true)
+            runDir('runs/server')
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 25
+    exclude 'com/hyfata/najoan/koreanpatch/config/yacl/**'
+    exclude 'com/hyfata/najoan/koreanpatch/mixin/accessor/GuiGraphicsAccessor.java'
+    exclude 'com/hyfata/najoan/koreanpatch/mixin/indicator/**'
+    exclude 'com/hyfata/najoan/koreanpatch/mixin/mods/**'
+    exclude 'com/hyfata/najoan/koreanpatch/util/YACLUtil.java'
+    exclude 'com/hyfata/najoan/koreanpatch/util/minecraft/RenderUtil.java'
+    exclude 'com/hyfata/najoan/koreanpatch/util/minecraft/gui/**'
+    exclude 'com/hyfata/najoan/koreanpatch/wrapper/WrapperREITextField.java'
+}
+
+sourceSets.main.java {
+    exclude 'com/hyfata/najoan/koreanpatch/config/ModMenuIntegration.java'
+    exclude 'com/hyfata/najoan/koreanpatch/mixin/mods/**'
+    exclude 'com/hyfata/najoan/koreanpatch/wrapper/WrapperREITextField.java'
+}

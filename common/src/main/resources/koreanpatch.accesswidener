@@ -1,0 +1,4 @@
+accessWidener v2 official
+accessible class net/minecraft/client/gui/screens/worldselection/CreateWorldScreen$GameTab
+accessible method net/minecraft/client/gui/components/EditBox isEditable ()Z
+accessible method net/minecraft/resources/Identifier <init> (Ljava/lang/String;Ljava/lang/String;)V
