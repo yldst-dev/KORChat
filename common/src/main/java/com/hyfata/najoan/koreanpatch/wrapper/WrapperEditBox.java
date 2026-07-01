@@ -45,11 +45,11 @@ public class WrapperEditBox implements InterfaceIMEWrapper {
     }
 
     private void updateScreen() {
-        if (this.client.screen == null) {
+        if (this.client.gui.screen() == null) {
             return;
         }
-        if (this.client.screen instanceof CreativeModeInventoryScreen && !accessor.invokeGetValue().isEmpty()) {
-            ((CreativeModeInventoryScreenInvoker) this.client.screen).updateCreativeSearch();
+        if (this.client.gui.screen() instanceof CreativeModeInventoryScreen && !accessor.invokeGetValue().isEmpty()) {
+            ((CreativeModeInventoryScreenInvoker) this.client.gui.screen()).updateCreativeSearch();
         }
     }
 
@@ -77,7 +77,7 @@ public class WrapperEditBox implements InterfaceIMEWrapper {
 
     private boolean validateKeyPressed(KeyEvent keyEvent) {
         Minecraft client = Minecraft.getInstance();
-        if (client.screen != null &&
+        if (client.gui.screen() != null &&
                 !GUIStatus.getInstance().isBypassInjection() &&
                 keyEvent.key() == GLFW.GLFW_KEY_BACKSPACE) {
             return onBackspaceKeyPressed();
@@ -101,7 +101,7 @@ public class WrapperEditBox implements InterfaceIMEWrapper {
 
     private boolean validateCharTyped(CharacterEvent event, boolean isEditable) {
         char chr = (char) event.codepoint();
-        return Minecraft.getInstance().screen != null &&
+        return Minecraft.getInstance().gui.screen() != null &&
                 !GUIStatus.getInstance().isBypassInjection() &&
                 LangTypeManager.getInstance().isKorean() &&
                 isEditable &&

@@ -1,10 +1,10 @@
 # KORChat
 
-KORChat은 Minecraft `26.1.2`용 한글 채팅 및 입력 모드입니다. 이 저장소는 `Korean Patch`를 기반으로 유지보수와 26.1.2 대응을 진행한 포크입니다.
+KORChat은 Minecraft `26.2`용 한글 채팅 및 입력 모드입니다. 이 저장소는 `Korean Patch`를 기반으로 유지보수와 26.2 대응을 진행한 포크입니다.
 
 ## 지원 환경
 
-- Minecraft `26.1.2`
+- Minecraft `26.2`
 - Java `25`
 - Fabric
 - NeoForge

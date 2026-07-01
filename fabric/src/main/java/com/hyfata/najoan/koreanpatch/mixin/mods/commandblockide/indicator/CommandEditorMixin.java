@@ -44,8 +44,8 @@ public abstract class CommandEditorMixin {
     public void renderHead(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (this.orgX != 0)
             commandField.setX((int) (this.orgX + IndicatorHandler.getIndicatorWidth() + margin));
-        if (this.width != 0 && Minecraft.getInstance().screen != null) {
-            int width = this.width + Minecraft.getInstance().screen.width;
+        if (this.width != 0 && Minecraft.getInstance().gui.screen() != null) {
+            int width = this.width + Minecraft.getInstance().gui.screen().width;
             int totalWidth = width + fieldWidth;
             commandField.setWidth((int) (totalWidth - IndicatorHandler.getIndicatorWidth() - margin));
         }
