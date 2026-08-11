@@ -41,6 +41,8 @@ public class KeyboardHandlerMixin {
         CategoryInput categoryInput = ConfigManager.getInstance().getConfig().getCategoryInput();
 
         if (window == minecraft.getWindow().handle() && !GUIStatus.getInstance().isBypassInjection() && KoreanPatchClient.loaded) {
+            boolean capsLockLang = Platform.isMac() && KeyBinds.isLangBoundToCapsLock();
+
             // ime key
             if (KeyBinds.getImeBinding().matches(keyEvent) && action == 1 &&
                     (!KeyBinds.getImeBinding().isDefault() || modifiers == 2) &&
@@ -52,14 +54,14 @@ public class KeyboardHandlerMixin {
 
             // lang key
             else if (KeyBinds.getLangBinding().matches(keyEvent) && action == 1 &&
-                    (!Platform.isMac() || modifiers != 1 && modifiers != 2)) {
+                    (!capsLockLang || modifiers != 1 && modifiers != 2)) {
                 LangTypeManager.getInstance().toggleCurrentType();
                 if (categoryInput.isMemoryLangTypePerScreen())
                     InputStatusStorage.getInstance().add(minecraft.gui.screen());
             }
 
             // fix mac capslock
-            if (Platform.isMac() && action == 0 && keyCode == -1 && scanCode == 255) {
+            if (capsLockLang && action == 0 && keyCode == -1 && scanCode == 255) {
                 DarwinController controller = (DarwinController) InputManager.getController();
                 if (controller.isCapsLockOn()) {
                     LangTypeManager.getInstance().setCurrentType(LanguageType.EN);

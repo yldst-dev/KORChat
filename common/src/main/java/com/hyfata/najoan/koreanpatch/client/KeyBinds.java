@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public class KeyBinds {
     private static final ArrayList<KeyMapping> keyMappings = new ArrayList<>();
+    private static final InputConstants.Key CAPS_LOCK_KEY =
+            InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_CAPS_LOCK);
 
     public static void register() {
         int keycode = GLFW.GLFW_KEY_LEFT_CONTROL;
@@ -50,5 +52,9 @@ public class KeyBinds {
 
     public static KeyMapping getImeBinding() {
         return keyMappings.get(1);
+    }
+
+    public static boolean isLangBoundToCapsLock() {
+        return getLangBinding().matches(CAPS_LOCK_KEY);
     }
 }
