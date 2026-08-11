@@ -19,7 +19,7 @@ public class KeyBinds {
             keycode = GLFW.GLFW_KEY_CAPS_LOCK;
         }
 
-        KeyMapping.Category koreanPatchCategory = new KeyMapping.Category(
+        KeyMapping.Category koreanPatchCategory = KeyMapping.Category.register(
                 new Identifier(Constants.MOD_ID, "keybinds")
         );
 

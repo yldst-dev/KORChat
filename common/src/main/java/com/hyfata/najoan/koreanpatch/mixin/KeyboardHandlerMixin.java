@@ -42,7 +42,8 @@ public class KeyboardHandlerMixin {
 
         if (window == minecraft.getWindow().handle() && !GUIStatus.getInstance().isBypassInjection() && KoreanPatchClient.loaded) {
             // ime key
-            if (KeyBinds.getImeBinding().matches(keyEvent) && action == 1 && modifiers == 2 &&
+            if (KeyBinds.getImeBinding().matches(keyEvent) && action == 1 &&
+                    (!KeyBinds.getImeBinding().isDefault() || modifiers == 2) &&
                     !categoryInput.isAlwaysImeEnabled()) {
                 InputManager.getController().toggleFocus();
                 if (categoryInput.isMemoryLangTypePerScreen())
